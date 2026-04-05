@@ -12,23 +12,23 @@ const MainContent = () => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const BASE_URL = process.env.REACT_APP_NEWS_URL;
 
-  const getData = async () => {
-    try {
-      const res = await fetch(
-        `${BASE_URL}?apikey=${API_KEY}&country=in&language=en`
-      );
-      const data = await res.json();
-      setNews(data.results || []);
-    } catch (err) {
-      setError("Failed to fetch news");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch(
+          `${BASE_URL}?apikey=${API_KEY}&country=in&language=en`
+        );
+        const data = await res.json();
+        setNews(data.results || []);
+      } catch (err) {
+        setError("Failed to fetch news");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
     getData();
-  }, []);
+  }, [BASE_URL, API_KEY]);
 
   // ✅ Filter logic
   const filteredNews = news.filter((item) => {
