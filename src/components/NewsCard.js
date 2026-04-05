@@ -8,13 +8,20 @@ const NewsCard = ({ data }) => {
       
       {/* Image */}
       {data.image_url && (
-        <div className="overflow-hidden">
-          <img
-            src={data.image_url}
-            alt={data.title}
-            className="w-full h-56 object-cover group-hover:scale-105 transition duration-300"
-          />
+      <div className="overflow-hidden w-full h-56 rounded-lg mb-4 flex items-center justify-center bg-gray-100">
+      {data.image_url ? (
+        <img
+          src={data.image_url}
+          alt={data.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+        />
+      ) : (
+        <div className="flex flex-col items-center justify-center text-gray-400 text-sm">
+          <span className="text-2xl mb-1">🖼️</span>
+          No Image Available
         </div>
+      )}
+    </div>
       )}
 
       <div className="p-5">
