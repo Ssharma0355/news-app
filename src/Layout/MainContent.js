@@ -30,14 +30,12 @@ const MainContent = () => {
         getData();
     },[])
     console.log(news)
+    if(isLoading) return <p>Loading..</p>
   return (
     <div>
-        {news.map((data)=>(
-            // <li key={data.article_id}>{data.title}</li>
-              <NewsCard id={data.article_id}
-              title={data.title}
-               />
-        ))}
+       {news.map((data) => (
+       <NewsCard key={data.article_id} data={data} />
+       ))}
           
      
     
