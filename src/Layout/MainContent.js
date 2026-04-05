@@ -16,25 +16,31 @@ const MainContent = () => {
     const getData = async () => {
       try {
         setIsLoading(true);
-
+  
         const res = await fetch(
           `${BASE_URL}?apikey=${API_KEY}&country=in&language=en`
         );
-
+  
         const data = await res.json();
-
+  
         console.log("API Response:", data);
-
-        // ✅ Handle all possible API formats safely
+  
+        // ✅ Handle API error (Rate limit etc.)
+        if (data.status === "error") {
+          setError(data.results?.message || "Something went wrong");
+          setNews([]);
+          return;
+        }
+  
+        // ✅ Handle valid data
         if (Array.isArray(data.results)) {
           setNews(data.results);
         } else if (Array.isArray(data.articles)) {
           setNews(data.articles);
         } else {
-          console.warn("Unexpected API format:", data);
           setNews([]);
         }
-
+  
       } catch (err) {
         console.error(err);
         setError("Failed to fetch news");
@@ -42,7 +48,7 @@ const MainContent = () => {
         setIsLoading(false);
       }
     };
-
+  
     getData();
   }, [BASE_URL, API_KEY]);
 
@@ -64,6 +70,26 @@ const MainContent = () => {
 
   // ✅ UI States
   if (isLoading) return <LoadingGrid />;
+  if (error)
+  return (
+    <div className="flex flex-col items-center justify-center mt-20 text-center px-4">
+      
+      <h2 className="text-xl md:text-2xl font-semibold text-red-500 mb-2">
+        🚫 News Limit Reached
+      </h2>
+
+      <p className="text-gray-600 max-w-md">
+        {error}
+      </p>
+
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+      >
+        Try Again
+      </button>
+    </div>
+  );
 
   if (error)
     return (
