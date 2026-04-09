@@ -75,7 +75,7 @@ const MainContent = () => {
     <div className="flex flex-col items-center justify-center mt-20 text-center px-4">
       
       <h2 className="text-xl md:text-2xl font-semibold text-red-500 mb-2">
-        🚫 News Limit Reached
+      News Limit Reached
       </h2>
 
       <p className="text-gray-600 max-w-md">
@@ -86,7 +86,7 @@ const MainContent = () => {
         onClick={() => window.location.reload()}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
       >
-        Try Again
+        Try Again!
       </button>
     </div>
   );
